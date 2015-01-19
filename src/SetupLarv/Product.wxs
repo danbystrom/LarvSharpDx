@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Product Id="*" Name="Larv" Language="1033" Codepage="1252" Version="0.1.0.0" Manufacturer="Dan Byström" UpgradeCode="90e62093-7c8d-4450-93dc-b98aa9f5ef0d">
+		<Package Id='*' Keywords='Installer' Description="Larv Setup" Manufacturer="Dan Byström"
+             InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+
+		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+		<MediaTemplate EmbedCab="yes" />
+
+		<Feature Id="ProductFeature" Title="Installer" Level="1">
+			<ComponentGroupRef Id="ProductComponents" />
+      <ComponentGroupRef Id="Billboards" />
+      <ComponentGroupRef Id="Effects" />
+      <ComponentGroupRef Id="Fonts" />
+      <ComponentGroupRef Id="Models" />
+      <ComponentGroupRef Id="TerrainTextures" />
+      <ComponentGroupRef Id="Textures" />
+    </Feature>
+
+    <Icon Id="Larv.exe" SourceFile="$(var.Larv.TargetPath)" />
+  
+  </Product>
+
+  <Fragment>
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="ProgramFilesFolder">
+				<Directory Id="INSTALLFOLDER" Name="Larv">
+          <Directory Id="Content" Name="Content">
+            <Directory Id="Billboards" Name="Billboards" />
+            <Directory Id="Effects" Name="Effects" />
+            <Directory Id="Fonts" Name="Fonts" />
+            <Directory Id="Models" Name="Models" />
+            <Directory Id="TerrainTextures" Name="TerrainTextures" />
+            <Directory Id="Textures" Name="Textures" />
+          </Directory>
+        </Directory>
+      </Directory>
+
+      <Directory Id="DesktopFolder" SourceName="Desktop" />
+    </Directory>
+  </Fragment>
+
+  <Fragment>
+    <ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+      <Component Guid="D20579C9-B343-4EF6-B412-4BA9DB4ACD5D">
+        <File Source="$(var.Larv.TargetPath)" KeyPath="yes">
+          <Shortcut Id="desktopshortcut" Directory="DesktopFolder" Name="LARV!" Description="LARV! 3D Game by Dan Byström" WorkingDirectory="INSTALLFOLDER" Icon="Larv.exe" Advertise="yes" />
+        </File>
+      </Component>
+
+      <Component Guid="b962ea4f-36e3-4d85-9dc8-c9a5a778eb78">
+        <File Source="$(var.Larv.TargetDir)Assimp32.dll" KeyPath="yes" />
+      </Component>
+      <Component Guid="1c744586-40ec-49e0-a195-496579dc0c67">
+        <File Source="$(var.Larv.TargetDir)Assimp64.dll" KeyPath="yes" />
+      </Component>
+      <Component Guid="0920db39-6f5e-46c9-be9b-fb52c60c05c2">
+        <File Source="$(var.Larv.TargetDir)AssimpNet.dll" KeyPath="yes" />
+      </Component>
+      <Component Guid="1038af80-a525-4cac-ab2c-a96143cca069">
+        <File Source="$(var.Larv.TargetDir)factor10.VisionThing.dll" KeyPath="yes" />
+      </Component>
+      <Component Guid="39e71fa0-61bd-4f6c-916c-e7fb5f2cf0f9">
+        <File Source="$(var.Larv.TargetDir)Larv.exe.config" KeyPath="yes" />
+      </Component>
+      <Component Guid="57c5d04e-0bb8-438c-aa92-1e46603bc33d">
+        <File Source="$(var.Larv.TargetDir)SharpDX.D3DCompiler.dll" KeyPath="yes" />
+      </Component>
+      <Component Guid="6306a913-714d-497a-94da-4eafe1705e14">
+        <File Source="$(var.Larv.TargetDir)SharpDX.Direct2D1.dll" KeyPath="yes" />
+      </Component>
+      <Component Guid="f7af7da9-b18e-4001-800f-70348056af8d">
+        <File Source="$(var.Larv.TargetDir)SharpDX.Direct3D11.dll" KeyPath="yes" />
+      </Component>
+      <Component Guid="2a6261b5-b518-4611-b61d-89b2f9573b6d">
+        <File Source="$(var.Larv.TargetDir)SharpDX.Direct3D9.dll" KeyPath="yes" />
+      </Component>
+      <Component Guid="f600464c-edc0-4232-9498-ba79d5d07a52">
+        <File Source="$(var.Larv.TargetDir)SharpDX.dll" KeyPath="yes" />
+      </Component>
+      <Component Guid="6e4e7614-a6a3-44ae-a4dc-044944b074b1">
+        <File Source="$(var.Larv.TargetDir)SharpDX.DXGI.dll" KeyPath="yes" />
+      </Component>
+      <Component Guid="9d094a13-4587-457b-8afa-3e07508971ba">
+        <File Source="$(var.Larv.TargetDir)SharpDX.Toolkit.Audio.dll" KeyPath="yes" />
+      </Component>
+      <Component Guid="0a170f05-9bd3-4e40-b28b-a193fbd4cf68">
+        <File Source="$(var.Larv.TargetDir)SharpDX.Toolkit.Compiler.dll" KeyPath="yes" />
+      </Component>
+      <Component Guid="112d4723-f4b7-4fac-949f-451befe4b542">
+        <File Source="$(var.Larv.TargetDir)SharpDX.Toolkit.dll" KeyPath="yes" />
+      </Component>
+      <Component Guid="36490e9e-3013-4ea1-a2a6-af82bbc1fa25">
+        <File Source="$(var.Larv.TargetDir)SharpDX.Toolkit.Game.dll" KeyPath="yes" />
+      </Component>
+      <Component Guid="f8d2c03b-7ed9-4ba1-b971-420ecf255b5b">
+        <File Source="$(var.Larv.TargetDir)SharpDX.Toolkit.Graphics.dll" KeyPath="yes" />
+      </Component>
+      <Component Guid="8f50e80f-f62c-45b5-970f-9532fda93aa7">
+        <File Source="$(var.Larv.TargetDir)SharpDX.Toolkit.Input.dll" KeyPath="yes" />
+      </Component>
+      <Component Guid="e6c89505-02d7-411a-8e4d-1f1d542b451b">
+        <File Source="$(var.Larv.TargetDir)SharpDX.XAudio2.dll" KeyPath="yes" />
+      </Component>
+
+    </ComponentGroup>
+    
+    <ComponentGroup Id="Billboards" Directory="Billboards">
+
+      <Component Guid="7b10422b-11ef-429f-852e-4a6d26874baf">
+        <File Source="$(var.Larv.TargetDir)Content\Billboards\CxBillboard.tkb" KeyPath="yes" />
+      </Component>
+      <Component Guid="f82c5319-d4b8-45e6-b5ad-eb9c8c3211ad">
+        <File Source="$(var.Larv.TargetDir)Content\Billboards\grass.tkb" KeyPath="yes" Id="GrassBillboard" />
+      </Component>
+      <Component Guid="4d5bfb76-ed5b-4c8d-9fdc-be6811cc8aef">
+        <File Source="$(var.Larv.TargetDir)Content\Billboards\StaticBillboard.tkb" KeyPath="yes" />
+      </Component>
+      <Component Guid="cd5bc976-9ac4-4fa1-9990-2e7bb40140c4">
+        <File Source="$(var.Larv.TargetDir)Content\Billboards\tree.tkb" KeyPath="yes" />
+      </Component>
+      <Component Guid="fd12dce1-2b2a-4942-a567-ed776cce1493">
+        <File Source="$(var.Larv.TargetDir)Content\Billboards\woodensign.tkb" KeyPath="yes" />
+      </Component>
+    </ComponentGroup>
+
+    <ComponentGroup Id="Effects" Directory="Effects">
+      <Component Guid="d7772fcd-5a28-4011-9cbc-b8e102425d2a">
+        <File Source="$(var.Larv.TargetDir)Content\Effects\Blur.tkb" KeyPath="yes" />
+      </Component>
+      <Component Guid="cbeadb8e-a9cf-4f39-871c-34e82a108f63">
+        <File Source="$(var.Larv.TargetDir)Content\Effects\SignTextEffect.tkb" KeyPath="yes" />
+      </Component>
+      <Component Guid="491add86-d560-435e-a166-21313877102c">
+        <File Source="$(var.Larv.TargetDir)Content\Effects\SimpleBumpEffect.tkb" KeyPath="yes" />
+      </Component>
+      <Component Guid="b2f98ecc-200b-4174-b9f7-f842cda68414">
+        <File Source="$(var.Larv.TargetDir)Content\Effects\SimpleTextureEffect.tkb" KeyPath="yes" />
+      </Component>
+      <Component Guid="2754c3db-e4bd-4a2d-a36b-8342b04fb4b8">
+        <File Source="$(var.Larv.TargetDir)Content\Effects\Skysphere.tkb" KeyPath="yes" />
+      </Component>
+      <Component Guid="0b6c6f49-46fe-409c-beba-ad576e2cc130">
+        <File Source="$(var.Larv.TargetDir)Content\Effects\Terrain.tkb" KeyPath="yes" />
+      </Component>
+    </ComponentGroup>
+
+    <ComponentGroup Id="Fonts" Directory="Fonts">
+      <Component Guid="10feeec0-e012-4843-a8cf-e20f100624d5">
+        <File Source="$(var.Larv.TargetDir)Content\Fonts\BlackCastle.tkb" KeyPath="yes" />
+      </Component>
+    </ComponentGroup>
+
+    <ComponentGroup Id="Models" Directory="Models">
+      <Component Guid="ab5ab29c-f56c-4241-915e-1e10e763ca05">
+        <File Source="$(var.Larv.TargetDir)Content\Models\cave.tkb" KeyPath="yes" Id="CaveModel"/>
+      </Component>
+      <Component Guid="e2c7a330-099f-4c58-876d-a4320117852c">
+        <File Source="$(var.Larv.TargetDir)Content\Models\frog.tkb" KeyPath="yes" />
+      </Component>
+      <Component Guid="1570cd1e-4e9c-4e9a-a76b-d4520d7de754">
+        <File Source="$(var.Larv.TargetDir)Content\Models\frogskin.tkb" KeyPath="yes" />
+      </Component>
+      <Component Guid="0d343c13-6111-4870-94ea-d08f03b101ee">
+        <File Source="$(var.Larv.TargetDir)Content\Models\grating.tkb" KeyPath="yes" />
+      </Component>
+      <Component Guid="26909bcb-d18f-49a0-9f36-d12275743d3f">
+        <File Source="$(var.Larv.TargetDir)Content\Models\windmillf.tkb" KeyPath="yes" />
+      </Component>
+      <Component Guid="07abddbc-3c17-41e2-9c69-da0294d307ab">
+        <File Source="$(var.Larv.TargetDir)Content\Models\windmill_diffuse.tkb" KeyPath="yes" />
+      </Component>
+    </ComponentGroup>
+
+    <ComponentGroup Id="TerrainTextures" Directory="TerrainTextures">
+      <Component Guid="061d4e31-6171-4636-94d9-5da1bc063f22">
+        <File Source="$(var.Larv.TargetDir)Content\TerrainTextures\Canyon.tkb" KeyPath="yes" />
+      </Component>
+      <Component Guid="953d4504-fbab-4a73-8931-c7a2cb20cea0">
+        <File Source="$(var.Larv.TargetDir)Content\TerrainTextures\dirtground.tkb" KeyPath="yes" />
+      </Component>
+      <Component Guid="6d057d52-a0f9-4a61-a4c7-0da1bc37ed9d">
+        <File Source="$(var.Larv.TargetDir)Content\TerrainTextures\grass.tkb" KeyPath="yes" Id="GrassTexture" />
+      </Component>
+      <Component Guid="46b85a6f-9451-44c6-ae43-5f9bb613eedb">
+        <File Source="$(var.Larv.TargetDir)Content\TerrainTextures\path.tkb" KeyPath="yes" />
+      </Component>
+      <Component Guid="30bf5176-0a5c-43ba-bd2e-420f49c29e2a">
+        <File Source="$(var.Larv.TargetDir)Content\TerrainTextures\rock.tkb" KeyPath="yes" />
+      </Component>
+      <Component Guid="44dd8824-4cbc-4328-905a-69ba76388ff7">
+        <File Source="$(var.Larv.TargetDir)Content\TerrainTextures\Sahara.tkb" KeyPath="yes" />
+      </Component>
+      <Component Guid="4e436097-f787-4faa-9d55-ceab2d921ab5">
+        <File Source="$(var.Larv.TargetDir)Content\TerrainTextures\sand.tkb" KeyPath="yes" />
+      </Component>
+      <Component Guid="05fe4cda-d464-43f5-8b51-7d0961ce5faa">
+        <File Source="$(var.Larv.TargetDir)Content\TerrainTextures\snow.tkb" KeyPath="yes" />
+      </Component>
+      <Component Guid="f747964e-effe-460b-b637-38b7027651a2">
+        <File Source="$(var.Larv.TargetDir)Content\TerrainTextures\stones.tkb" KeyPath="yes" />
+      </Component>
+      <Component Guid="386a8e01-480d-4c1b-b01b-fdd3288d9f2c">
+        <File Source="$(var.Larv.TargetDir)Content\TerrainTextures\wheatfield.tkb" KeyPath="yes" />
+      </Component>
+    </ComponentGroup>
+
+    <ComponentGroup Id="Textures" Directory="Textures">
+      <Component Guid="2a427cfb-592f-488a-b3ad-1f2839bd2532">
+        <File Source="$(var.Larv.TargetDir)Content\Textures\black.tkb" KeyPath="yes" />
+      </Component>
+      <Component Guid="9b35c6d9-5a6f-4bd8-845a-e39660affd08">
+        <File Source="$(var.Larv.TargetDir)Content\Textures\clouds.tkb" KeyPath="yes" />
+      </Component>
+      <Component Guid="400f7616-5dce-4d4e-80a2-8c62508b53c3">
+        <File Source="$(var.Larv.TargetDir)Content\Textures\eggshell.tkb" KeyPath="yes" />
+      </Component>
+      <Component Guid="34b2e073-8bd9-4ea1-8fde-b49182490487">
+        <File Source="$(var.Larv.TargetDir)Content\Textures\snakeskin.tkb" KeyPath="yes" />
+      </Component>
+      <Component Guid="921e2f85-4b7f-4cd7-9d1c-2678ac72b2d2">
+        <File Source="$(var.Larv.TargetDir)Content\Textures\snakeskinhead.tkb" KeyPath="yes" />
+      </Component>
+      <Component Guid="d5f39b80-c70b-4e6d-954d-d4d7a4ff925b">
+        <File Source="$(var.Larv.TargetDir)Content\Textures\snakeskinmap.tkb" KeyPath="yes" />
+      </Component>
+      <Component Guid="8c1f102a-b4b9-43cb-b075-ff0545043ca2">
+        <File Source="$(var.Larv.TargetDir)Content\Textures\woodfloor.tkb" KeyPath="yes" />
+      </Component>
+       <Component Guid="2832536F-3B47-4EDA-8A59-2CE37FF06ABF">
+        <File Source="$(var.Larv.TargetDir)Content\Textures\cave.tkb" KeyPath="yes" Id="CaveTexture"/>
+      </Component>
+     
+    </ComponentGroup>
+    
+	</Fragment>
+</Wix>
