@@ -1,0 +1,212 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <!-- Common Properties -->
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{9158F6C8-73CF-49B4-B7EB-B06F26FCB2AC}</ProjectGuid>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>factor10.VisionThing</RootNamespace>
+    <AssemblyName>factor10.VisionThing</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <!-- Platform Dependent Properties -->
+    <OutputType>Library</OutputType>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\VisionQuest\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <NuGetPackageImportStamp>fd72c6b1</NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="SharpDX, Version=2.6.3.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(SharpDXPackageBinDir)\SharpDX.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.D3DCompiler, Version=2.6.3.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL" />
+    <Reference Include="SharpDX.Direct3D11, Version=2.6.3.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(SharpDXPackageBinDir)\SharpDX.Direct3D11.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.DXGI, Version=2.6.3.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(SharpDXPackageBinDir)\SharpDX.DXGI.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.Toolkit, Version=2.6.3.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(SharpDXPackageBinDir)\SharpDX.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.Toolkit.Game, Version=2.6.3.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(SharpDXPackageBinDir)\SharpDX.Toolkit.Game.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.Toolkit.Graphics, Version=2.6.3.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(SharpDXPackageBinDir)\SharpDX.Toolkit.Graphics.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.Toolkit.Input, Version=2.6.3.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(SharpDXPackageBinDir)\SharpDX.Toolkit.Input.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Animation.cs" />
+    <Compile Include="ArcGenerator.cs" />
+    <Compile Include="ArcVertex.cs" />
+    <Compile Include="CameraStuff\Camera.cs" />
+    <Compile Include="VDrawable.cs" />
+    <Compile Include="VDrawableInstance.cs" />
+    <Compile Include="FloatingText\FloatingTextItem.cs" />
+    <Compile Include="FloatingText\FloatingTexts.cs" />
+    <Compile Include="CameraStuff\MoveCameraYaw.cs" />
+    <Compile Include="CameraStuff\MoveCameraArc.cs" />
+    <Compile Include="CameraStuff\MoveCameraBase.cs" />
+    <Compile Include="CameraStuff\MoveCamera.cs" />
+    <Compile Include="Primitives\VertexPositionNormalTangentTexture.cs" />
+    <Compile Include="SharpDxExtensions.cs" />
+    <Compile Include="Terrain\ColorSurface.cs" />
+    <Compile Include="Terrain\StaticBillboardVertex.cs" />
+    <Compile Include="Terrain\StaticBillboard.cs" />
+    <Compile Include="Util\DoubleSin.cs" />
+    <Compile Include="Effects\EffectHelpers.cs" />
+    <Compile Include="Effects\IVEffect.cs" />
+    <Compile Include="Effects\VisionEffect.cs" />
+    <Compile Include="ExtensionMethods.cs" />
+    <Compile Include="IVDrawable.cs" />
+    <Compile Include="Terrain\Mt9Surface.cs" />
+    <Compile Include="Objects\DrawableBox.cs" />
+    <Compile Include="Objects\Bridge.cs" />
+    <Compile Include="Primitives\BezierPrimitive.cs" />
+    <Compile Include="Primitives\CubePrimitive.cs" />
+    <Compile Include="Primitives\CylinderPrimitive.cs" />
+    <Compile Include="Primitives\GeometricPrimitive.cs" />
+    <Compile Include="Primitives\PlaneMeshPrimitive.cs" />
+    <Compile Include="Primitives\PlanePrimitive.cs" />
+    <Compile Include="Primitives\SpherePrimitive.cs" />
+    <Compile Include="Primitives\TeapotPrimitive.cs" />
+    <Compile Include="Primitives\TorusPrimitive.cs" />
+    <Compile Include="Primitives\VertexPosition.cs" />
+    <Compile Include="Primitives\VertexPositionNormal.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ShadowMap.cs" />
+    <Compile Include="SkySphere.cs" />
+    <Compile Include="Terrain\CxBillboardVertex.cs" />
+    <Compile Include="Terrain\GroundMap.cs" />
+    <Compile Include="Terrain\CxBillboard.cs" />
+    <Compile Include="Terrain\Sculptable.cs" />
+    <Compile Include="Terrain\TerrainBase.cs" />
+    <Compile Include="Terrain\TerrainPlane.cs" />
+    <Compile Include="Terrain\TerrainVertex.cs" />
+    <Compile Include="Terrain\WeightsMap.cs" />
+    <Compile Include="Util\CollisionHelpers.cs" />
+    <Compile Include="Util\FramesPerSecondCounter.cs" />
+    <Compile Include="Util\ParallelToDo.cs" />
+    <Compile Include="Util\SequentialToDo.cs" />
+    <Compile Include="Util\ToDoBase.cs" />
+    <Compile Include="VisionContent.cs" />
+    <Compile Include="Water\WaterFactory.cs" />
+    <Compile Include="Water\WaterSurface.cs" />
+    <Compile Include="Water\WaterVertex.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ToolkitTexture Include="Content\Textures\bigstone.jpg" />
+    <ToolkitTexture Include="Content\Textures\brick_normal_map.jpg" />
+    <ToolkitTexture Include="Content\Textures\brick_texture_map.jpg" />
+    <ToolkitTexture Include="Content\Textures\clouds.dds" />
+  </ItemGroup>
+  <ItemGroup>
+    <ToolkitTexture Include="Content\Water\waterbump.dds" />
+    <ToolkitTexture Include="Content\Water\waterdmap0.jpg" />
+    <ToolkitTexture Include="Content\Water\waterdmap1.jpg" />
+    <ToolkitTexture Include="Content\Water\wave1.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <ToolkitTexture Include="Content\Textures\windmill_diffuse.dds" />
+    <ToolkitTexture Include="Content\TerrainTextures\wheatfield.dds" />
+    <ToolkitTexture Include="Content\Billboards\woodensign.dds" />
+    <ToolkitTexture Include="Content\TerrainTextures\Sahara.dds" />
+    <ToolkitTexture Include="Content\Billboards\grass.dds" />
+    <ToolkitTexture Include="Content\Billboards\tree.dds" />
+    <ToolkitTexture Include="Content\TerrainTextures\grass.dds" />
+    <ToolkitTexture Include="Content\TerrainTextures\path.dds" />
+    <ToolkitTexture Include="Content\TerrainTextures\Canyon.dds" />
+    <ToolkitTexture Include="Content\TerrainTextures\sand.dds" />
+    <ToolkitTexture Include="Content\TerrainTextures\stones.dds" />
+    <ToolkitTexture Include="Content\TerrainTextures\dirtground.dds" />
+    <ToolkitTexture Include="Content\TerrainTextures\rock.dds" />
+    <ToolkitTexture Include="Content\TerrainTextures\begonias.dds" />
+    <ToolkitTexture Include="Content\TerrainTextures\snow.dds" />
+    <ToolkitTexture Include="Content\TerrainTextures\tree.dds" />
+    <ToolkitFxc Include="Content\Billboards\CxBillboard.fx" />
+    <ToolkitTexture Include="Content\Billboards\wheat_billboard.dds" />
+    <ToolkitFxc Include="Content\Effects\Blur.fx" />
+    <ToolkitFxc Include="Content\Billboards\StaticBillboard.fx" />
+    <ToolkitFxc Include="Content\Effects\SimpleTextureEffect.fx" />
+    <ToolkitFxc Include="Content\Effects\ArcsEffect.fx" />
+    <ToolkitFxc Include="Content\Effects\BillboardEffect.fx" />
+    <ToolkitFxc Include="Content\Effects\ReflectedWater.fx" />
+    <ToolkitFxc Include="Content\Effects\SignTextEffect.fx" />
+    <ToolkitFxc Include="Content\Effects\SimpleBumpEffect.fx" />
+    <ToolkitFxc Include="Content\Effects\Skysphere.fx" />
+    <ToolkitFxc Include="Content\Effects\Terrain.fx" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ToolkitFxc Include="Content\Billboards\CxBillboard2.fx" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+    <Error Condition="!Exists('..\packages\SharpDX.2.6.3\build\SharpDX.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\SharpDX.2.6.3\build\SharpDX.targets'))" />
+    <Error Condition="!Exists('..\packages\SharpDX.Toolkit.2.6.3\build\SharpDX.Toolkit.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\SharpDX.Toolkit.2.6.3\build\SharpDX.Toolkit.targets'))" />
+  </Target>
+  <Import Project="..\packages\SharpDX.2.6.3\build\SharpDX.targets" Condition="Exists('..\packages\SharpDX.2.6.3\build\SharpDX.targets')" />
+  <Import Project="..\packages\SharpDX.Toolkit.2.6.3\build\SharpDX.Toolkit.targets" Condition="Exists('..\packages\SharpDX.Toolkit.2.6.3\build\SharpDX.Toolkit.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

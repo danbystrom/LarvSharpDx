@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TkFont>
+  <FontName>BlackCastleMF</FontName>
+  <Size>32</Size>
+  <Spacing>0</Spacing>
+  <LineSpacing>0</LineSpacing>
+  <UseKerning>false</UseKerning>
+  <Format>Auto</Format>
+  <CharacterRegions>
+    <CharacterRegion>
+      <Start>32</Start>
+      <End>127</End>
+    </CharacterRegion>
+    <CharacterRegion>
+      <Start>228</Start>
+      <End>229</End>
+    </CharacterRegion>
+    <CharacterRegion>
+      <Start>246</Start>
+      <End>246</End>
+    </CharacterRegion>
+    <CharacterRegion>
+      <Start>248</Start>
+      <End>248</End>
+    </CharacterRegion>
+    <CharacterRegion>
+      <Start>196</Start>
+      <End>197</End>
+    </CharacterRegion>
+    <CharacterRegion>
+      <Start>214</Start>
+      <End>214</End>
+    </CharacterRegion>
+  </CharacterRegions>
+  <DefaultCharacter>32</DefaultCharacter>
+  <Style>Regular</Style>
+  <NoPremultiply>false</NoPremultiply>
+</TkFont>
