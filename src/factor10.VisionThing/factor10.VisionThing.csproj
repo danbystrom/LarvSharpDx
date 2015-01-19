@@ -142,9 +142,6 @@
     <Compile Include="Water\WaterVertex.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ToolkitTexture Include="Content\Textures\bigstone.jpg" />
-    <ToolkitTexture Include="Content\Textures\brick_normal_map.jpg" />
-    <ToolkitTexture Include="Content\Textures\brick_texture_map.jpg" />
     <ToolkitTexture Include="Content\Textures\clouds.dds" />
   </ItemGroup>
   <ItemGroup>
@@ -154,7 +151,6 @@
     <ToolkitTexture Include="Content\Water\wave1.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <ToolkitTexture Include="Content\Textures\windmill_diffuse.dds" />
     <ToolkitTexture Include="Content\TerrainTextures\wheatfield.dds" />
     <ToolkitTexture Include="Content\Billboards\woodensign.dds" />
     <ToolkitTexture Include="Content\TerrainTextures\Sahara.dds" />
@@ -186,9 +182,6 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ToolkitFxc Include="Content\Billboards\CxBillboard2.fx" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
