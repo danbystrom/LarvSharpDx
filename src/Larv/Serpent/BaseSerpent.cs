@@ -137,7 +137,7 @@ namespace Larv.Serpent
                     _fractionAngle = 0;
                     _whereabouts.Location = _whereabouts.NextLocation;
                     takeDirection(false);
-                } else if (_fractionAngle < 0.7f)
+                } else if (_fractionAngle < 0.6f)
                     takeDirection(true);
                 _whereabouts.Fraction = (float) Math.Sin(_fractionAngle*MathUtil.PiOverTwo);
             }

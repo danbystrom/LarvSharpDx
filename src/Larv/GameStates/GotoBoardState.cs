@@ -32,18 +32,14 @@ namespace Larv.GameStates
             var direction = Vector3.Left;
             var toCameraPosition = _signPosition + direction*2.4f;
 
-#if !DEBUG
-            const float time1 = 10f;
-            const float time2 = 0.25f;
-#else
-            var time1 = 2.5f;
-            var time2 = 2f;
-#endif
+            const float gotoToBoardSpeed = 2.5f;
+            const float lookAtBoardTime = 2f;
+
             // move to the board in an arc
-            _actions.AddDurable(() => new MoveCameraArc(_serpents.Camera, time1.UnitsPerSecond(), toCameraPosition, Vector3.Right, 5));
+            _actions.AddDurable(() => new MoveCameraArc(_serpents.Camera, gotoToBoardSpeed.UnitsPerSecond(), toCameraPosition, Vector3.Right, 5));
 
             // look at the board for two seconds, while resetting the playing field
-            _actions.AddOneShot(time2, () =>
+            _actions.AddOneShot(lookAtBoardTime, () =>
             {
                 _serpents.Restart(_scene);
                 HomingDevice.Attach(_serpents);
