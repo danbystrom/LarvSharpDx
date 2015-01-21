@@ -51,14 +51,6 @@ namespace Larv.GameStates
         {
             addExplanationText();
 
-            if (_serpents.Camera.KeyboardState.IsKeyPressed(Keys.Q))
-            {
-                _serpents.AddAndShowScore(5500, Vector3.Zero);
-                _serpents.UpdateScore();
-                gameState = new HallOfameState(_serpents);
-                return;
-            }
-
             _freeCamera ^= _serpents.Camera.KeyboardState.IsKeyPressed(Keys.C);
             if(_freeCamera)
                 _serpents.Camera.UpdateFreeFlyingCamera(gameTime);

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using factor10.VisionThing;
@@ -38,8 +39,11 @@ namespace Larv
         public LarvGame()
         {
             _graphicsDeviceManager = new GraphicsDeviceManager(this);
+#if DEBUG
             _graphicsDeviceManager.DeviceCreationFlags = DeviceCreationFlags.Debug;
             _graphicsDeviceManager.SynchronizeWithVerticalRetrace = false;
+#endif
+
 #if false
             var screen = Screen.AllScreens.First(_ => !_.Primary);
             _graphicsDeviceManager.IsFullScreen = true;
@@ -79,22 +83,32 @@ namespace Larv
 
         protected override void LoadContent()
         {
-            _lcontent = new LarvContent(GraphicsDevice, Content, loadSceneDescriptions());
+            try
+            {
+                _lcontent = new LarvContent(GraphicsDevice, Content, loadSceneDescriptions());
 
-            var shadowCameraPos = new Vector3(12, 4, 12) - VisionContent.SunlightDirection*32;
-            var shadowCameraLookAt = shadowCameraPos + VisionContent.SunlightDirection;
-            _lcontent.ShadowMap.Camera.Update(shadowCameraPos, shadowCameraLookAt);
+                var shadowCameraPos = new Vector3(12, 4, 12) - VisionContent.SunlightDirection*32;
+                var shadowCameraLookAt = shadowCameraPos + VisionContent.SunlightDirection;
+                _lcontent.ShadowMap.Camera.Update(shadowCameraPos, shadowCameraLookAt);
 
-            var camera = new Camera(
-                _lcontent.ClientSize,
-                new KeyboardManager(this),
-                new MouseManager(this),
-                new PointerManager(this),
-                AttractState.CameraPosition,
-                AttractState.CameraLookAt) {MovingSpeed = 8};
-            _serpents = new Serpents(_lcontent, camera, 0);
-            _lcontent.ShadowMap.ShadowCastingObjects.Add(_serpents);
-            _gameState = new AttractState(_serpents);
+                var camera = new Camera(
+                    _lcontent.ClientSize,
+                    new KeyboardManager(this),
+                    new MouseManager(this),
+                    new PointerManager(this),
+                    AttractState.CameraPosition,
+                    AttractState.CameraLookAt) {MovingSpeed = 8};
+                _serpents = new Serpents(_lcontent, camera, 0);
+                _lcontent.ShadowMap.ShadowCastingObjects.Add(_serpents);
+                _gameState = new AttractState(_serpents);
+
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.ToString(), "Oh no!");
+                Exit();
+            }
 
             base.LoadContent();
         }
@@ -107,15 +121,17 @@ namespace Larv
             _serpents.Camera.UpdateInputDevices();
             _lcontent.Ground.Update(_serpents.Camera, gameTime);
 
+#if DEBUG
             _paused ^= _serpents.Camera.KeyboardState.IsKeyPressed(Keys.P);
+            for (var key = Keys.D1; key < Keys.D5; key++)
+                if (_serpents.Camera.KeyboardState.IsKeyPressed(key))
+                    _gameState = new GotoBoardState(_serpents, key - Keys.D1);
+#endif
+
             if (_paused)
                 _serpents.Camera.UpdateFreeFlyingCamera(gameTime);
             else
                 _gameState.Update(_serpents.Camera, gameTime, ref _gameState);
-
-            for (var key = Keys.D1; key < Keys.D5; key++)
-                if (_serpents.Camera.KeyboardState.IsKeyPressed(key))
-                    _gameState = new GotoBoardState(_serpents, key - Keys.D1);
 
             if (_serpents.Camera.KeyboardState.IsKeyDown(Keys.Escape))
             {
@@ -134,7 +150,7 @@ namespace Larv
             //GraphicsDevice.SetRasterizerState(GraphicsDevice.RasterizerStates.WireFrame);
  
             using (_lcontent.UsingSpriteBatch())
-                _lcontent.DrawString("FPS: {0}  {1}".Fmt(_fps.FrameRate, _gameState), Vector2.Zero, 0.5f, 0, Color.White);
+                _lcontent.DrawString("FPS: {0}  {1}".Fmt(_fps.FrameRate, _gameState), Vector2.Zero, 0.3f, 0, Color.White);
 
             base.Draw(gameTime);
         }

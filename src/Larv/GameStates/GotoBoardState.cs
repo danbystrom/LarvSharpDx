@@ -12,6 +12,8 @@ namespace Larv.GameStates
 {
     internal class GotoBoardState : IGameState
     {
+        public readonly Vector4 SignTextColor = new Vector4(0.5f, 0.4f, 0.3f, 1);
+
         private readonly Serpents _serpents;
         private readonly int _scene;
         private readonly IVEffect _signEffect;
@@ -32,13 +34,14 @@ namespace Larv.GameStates
             var direction = Vector3.Left;
             var toCameraPosition = _signPosition + direction*2.4f;
 
-            const float gotoToBoardSpeed = 2.5f;
-            const float lookAtBoardTime = 2f;
+            const float goToBoardSpeed = 2.5f;
+            const float lookAtBoardTime = 1f;
+            const float turnToCaveTime = 2f;
 
             // move to the board in an arc
-            _actions.AddDurable(() => new MoveCameraArc(_serpents.Camera, gotoToBoardSpeed.UnitsPerSecond(), toCameraPosition, Vector3.Right, 5));
+            _actions.AddDurable(() => new MoveCameraArc(_serpents.Camera, goToBoardSpeed.UnitsPerSecond(), toCameraPosition, Vector3.Right, 5));
 
-            // look at the board for two seconds, while resetting the playing field
+            // look at the board while resetting the playing field
             _actions.AddOneShot(lookAtBoardTime, () =>
             {
                 _serpents.Restart(_scene);
@@ -50,7 +53,7 @@ namespace Larv.GameStates
 
             // turn around the camera to look at the cave 
             _actions.AddDurable(
-                () => new MoveCameraYaw(_serpents.Camera, 2f.Time(), toPosition, StartSerpentState.GetPlayerInitialLookAt(_serpents.PlayingField)));
+                () => new MoveCameraYaw(_serpents.Camera, turnToCaveTime.Time(), toPosition, StartSerpentState.GetPlayerInitialLookAt(_serpents.PlayingField)));
         }
 
         public void Update(Camera camera, GameTime gameTime, ref IGameState gameState)
@@ -73,7 +76,7 @@ namespace Larv.GameStates
             var font = _serpents.LContent.Font;
             var text = string.Format("Entering scene {0}", 1 + _scene);
             _signEffect.World = Matrix.BillboardRH(_signPosition + Vector3.Left * 0.1f, _signPosition + Vector3.Left, -camera.Up, Vector3.Right);
-            _signEffect.DiffuseColor = new Vector4(0.5f, 0.4f, 0.3f, 1);
+            _signEffect.DiffuseColor = SignTextColor;
             sb.Begin(SpriteSortMode.Deferred, _signEffect.GraphicsDevice.BlendStates.NonPremultiplied, null, _signEffect.GraphicsDevice.DepthStencilStates.DepthRead, null, _signEffect.Effect);
             sb.DrawString(font, text, Vector2.Zero, Color.Black, 0, font.MeasureString(text) / 2, 0.010f, 0, 0);
             sb.End();
