@@ -3,12 +3,13 @@ using factor10.VisionThing.CameraStuff;
 using factor10.VisionThing.Effects;
 using factor10.VisionThing.Primitives;
 using SharpDX;
+using SharpDX.Toolkit.Graphics;
 
 namespace factor10.VisionThing.Terrain
 {
     public class TerrainPlane : IDisposable
     {
-        private readonly PlanePrimitive<TerrainVertex> _loPlane;
+        private readonly PlanePrimitive<VertexPositionTexture> _loPlane;
 
         public const int SquareSize = 64;
         public readonly IVEffect Effect;
@@ -16,12 +17,11 @@ namespace factor10.VisionThing.Terrain
         public TerrainPlane(VisionContent vContent)
         {
             Effect = vContent.LoadEffect("Effects/Terrain");
-            _loPlane = new PlanePrimitive<TerrainVertex>(
+            _loPlane = new PlanePrimitive<VertexPositionTexture>(
                 Effect.GraphicsDevice,
-                (x, y, w, h) => new TerrainVertex(
-                    new Vector3(x, 0, y),
-                    new Vector2(x/SquareSize, y/SquareSize),
-                    x/SquareSize),
+                _ => new VertexPositionTexture(
+                    _.Position,
+                    _.TextureCoordinate),
                 SquareSize, SquareSize, 5);
         }
 

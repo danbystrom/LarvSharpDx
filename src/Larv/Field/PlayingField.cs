@@ -32,7 +32,7 @@ namespace Larv.Field
         {
             _texture = texture;
 
-            var pfInfo = lContent.PlayingFieldInfos[level];
+            var pfInfo = lContent.PlayingFieldInfos[level % lContent.PlayingFieldInfos.Length];
             TheField = pfInfo.PlayingField;
             Floors = pfInfo.Floors;
             Height = pfInfo.Height;

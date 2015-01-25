@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using factor10.VisionThing.Effects;
+using SharpDX;
 using SharpDX.Toolkit.Graphics;
 using Buffer = SharpDX.Toolkit.Graphics.Buffer;
 
@@ -12,8 +13,27 @@ namespace factor10.VisionThing.Primitives
         void Draw(IVEffect effect, int lod = 0);
     }
 
-    public abstract class GeometricPrimitive<T> : IDisposable, IVDrawable, IGeometricPrimitive where T : struct, IEquatable<T>
+    public class PositionNormalTangentTexture
     {
+        public Vector3 Position;
+        public Vector3 Normal;
+        public Vector3 Tangent;
+        public Vector2 TextureCoordinate;
+
+        public PositionNormalTangentTexture(Vector3 position, Vector3 normal, Vector3 tangent, Vector2 textureCoordinate)
+        {
+            Position = position;
+            Normal = normal;
+            Tangent = tangent;
+            TextureCoordinate = textureCoordinate;
+        }
+    }
+
+    public abstract class GeometricPrimitive<T> : IVDrawable, IGeometricPrimitive where T : struct, IEquatable<T>
+    {
+
+        public delegate T CreateVertex(PositionNormalTangentTexture positionNormalTangentTexture);
+
         private List<T> _vertices = new List<T>();
         private List<List<uint>> _indicesOfLods = new List<List<uint>>();
         private List<uint> _indices;
@@ -24,29 +44,34 @@ namespace factor10.VisionThing.Primitives
 
         protected GeometricPrimitive()
         {
-            addLevelOfDetail();
+            AddLevelOfDetail();
         }
 
-        protected void addVertex(T vertex)
+        protected void AddVertex(T vertex)
         {
             _vertices.Add(vertex);
         }
 
-        protected void addIndex(int index)
+        protected void AddVertex(CreateVertex createVertex, Vector3 position, Vector3 normal, Vector3 tangent, Vector2 textureCoordinate)
+        {
+            _vertices.Add(createVertex(new PositionNormalTangentTexture(position, normal, tangent, textureCoordinate)));
+        }
+
+        protected void AddIndex(int index)
         {
             if (index > ushort.MaxValue)
                 throw new ArgumentOutOfRangeException("index");
             _indices.Add((ushort) index);
         }
 
-        protected void addTriangle(int i0, int i1, int i2, bool swap=false)
+        protected void AddTriangle(int i0, int i1, int i2, bool swap = false)
         {
-            addIndex(i0);
-            addIndex(swap ? i2 : i1);
-            addIndex(swap ? i1 : i2);
+            AddIndex(i0);
+            AddIndex(swap ? i2 : i1);
+            AddIndex(swap ? i1 : i2);
         }
 
-        protected void addLevelOfDetail()
+        protected void AddLevelOfDetail()
         {
             if (_indices != null && !_indices.Any())
                 return;
@@ -54,7 +79,7 @@ namespace factor10.VisionThing.Primitives
             _indicesOfLods.Add(_indices);
         }
 
-        protected void addNullLevelOfDetail()
+        protected void AddNullLevelOfDetail()
         {
             _indicesOfLods.Insert(_indicesOfLods.Count - 1, null);
         }
@@ -64,7 +89,7 @@ namespace factor10.VisionThing.Primitives
             get { return _vertices.Count; }
         }
 
-        protected void initializePrimitive(GraphicsDevice graphicsDevice)
+        protected void InitializePrimitive(GraphicsDevice graphicsDevice)
         {
             _vertexBuffer = Buffer.Vertex.New(graphicsDevice, _vertices.ToArray());
             _vertexInputLayout = VertexInputLayout.FromBuffer(0, _vertexBuffer);
@@ -117,35 +142,23 @@ namespace factor10.VisionThing.Primitives
 
         public void Draw(IVEffect effect, int lod = 0)
         {
-            var graphicsDevice = effect.GraphicsDevice;
-
-            foreach (var effectPass in effect.Effect.CurrentTechnique.Passes)
-            {
-                effectPass.Apply();
-
-                graphicsDevice.SetVertexBuffer(_vertexBuffer);
-                graphicsDevice.SetVertexInputLayout(_vertexInputLayout);
-                graphicsDevice.SetIndexBuffer(_indexBuffers[lod], false);
-
-                graphicsDevice.DrawIndexed(PrimitiveType.TriangleList, _indexBuffers[lod].ElementCount);
-                VisionContent.RenderedTriangles += _indexBuffers[lod].ElementCount;
-            }
+            DrawSubset(effect, _indexBuffers[lod].ElementCount, _indexBuffers[lod]);
         }
 
-        public void Draw(BasicEffect effect, int lod = 0)
+        protected void DrawSubset(IVEffect effect, int elementCount, Buffer indexBuffer = null)
         {
             var graphicsDevice = effect.GraphicsDevice;
+            indexBuffer = indexBuffer ?? _indexBuffers[0];
 
-            graphicsDevice.SetVertexBuffer(_vertexBuffer);
-            graphicsDevice.SetIndexBuffer(_indexBuffers[lod], false);
-
-            foreach (var effectPass in effect.CurrentTechnique.Passes)
+            effect.ForEachPass(() =>
             {
-                effectPass.Apply();
-                graphicsDevice.DrawIndexed(PrimitiveType.TriangleList, _indexBuffers[lod].ElementCount);
-                VisionContent.RenderedTriangles += _indexBuffers[lod].ElementCount;
-            }
+                graphicsDevice.SetVertexBuffer(_vertexBuffer);
+                graphicsDevice.SetVertexInputLayout(_vertexInputLayout);
+                graphicsDevice.SetIndexBuffer(indexBuffer, false);
 
+                graphicsDevice.DrawIndexed(PrimitiveType.TriangleList, elementCount);
+                VisionContent.RenderedTriangles += elementCount;
+            });
         }
 
     }

@@ -36,7 +36,7 @@ namespace Larv
             TextureEffect = LoadEffect("effects/simpletextureeffect");
             BumpEffect = LoadEffect("effects/simplebumpeffect");
             Sphere = new SpherePrimitive<VertexPositionNormalTangentTexture>(GraphicsDevice,
-                (p, n, t, tx) => new VertexPositionNormalTangentTexture(p, n, t, tx), 2, 10);
+                _ => new VertexPositionNormalTangentTexture(_), 2, 10);
             Sky = new SkySphere(this, Load<TextureCube>(@"Textures\clouds"));
             Ground = new Ground(this);
             ShadowMap = new ShadowMap(this, 800, 800, 1, 50);

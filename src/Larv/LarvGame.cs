@@ -123,7 +123,7 @@ namespace Larv
 
 #if DEBUG
             _paused ^= _serpents.Camera.KeyboardState.IsKeyPressed(Keys.P);
-            for (var key = Keys.D1; key < Keys.D5; key++)
+            for (var key = Keys.D1; key <= Keys.D6; key++)
                 if (_serpents.Camera.KeyboardState.IsKeyPressed(key))
                     _gameState = new GotoBoardState(_serpents, key - Keys.D1);
 #endif

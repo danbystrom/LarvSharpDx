@@ -113,7 +113,6 @@
     <Compile Include="Primitives\CubePrimitive.cs" />
     <Compile Include="Primitives\CylinderPrimitive.cs" />
     <Compile Include="Primitives\GeometricPrimitive.cs" />
-    <Compile Include="Primitives\PlaneMeshPrimitive.cs" />
     <Compile Include="Primitives\PlanePrimitive.cs" />
     <Compile Include="Primitives\SpherePrimitive.cs" />
     <Compile Include="Primitives\TeapotPrimitive.cs" />

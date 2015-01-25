@@ -9,7 +9,6 @@ namespace factor10.VisionThing.Primitives
     /// </summary>
     public class SpherePrimitive<T> : GeometricPrimitive<T> where T : struct, IEquatable<T>
     {
-        public delegate T CreateVertex(Vector3 position, Vector3 normal, Vector3 tangent, Vector2 textureCoordinate);
 
         /// <summary>
         /// Constructs a new sphere primitive,
@@ -33,7 +32,7 @@ namespace factor10.VisionThing.Primitives
             var radius = diameter/2;
 
             // Start with a single vertex at the bottom of the sphere.
-            addVertex(createVertex(Vector3.Down*radius, Vector3.Down, Vector3.BackwardLH, new Vector2(0.5f, 1)));
+            AddVertex(createVertex, Vector3.Down*radius, Vector3.Down, Vector3.BackwardLH, new Vector2(0.5f, 1));
 
             // Create rings of vertices at progressively higher latitudes.
             for (var i = 1; i < stackCount; i++)
@@ -60,16 +59,16 @@ namespace factor10.VisionThing.Primitives
                         0,
                         radius*(float) Math.Cos(longitude)*dxz);
 
-                    addVertex(createVertex(normal*radius, normal, tangent, textureCoordinate));
+                    AddVertex(createVertex, normal*radius, normal, tangent, textureCoordinate);
                 }
             }
 
             // Finish with a single vertex at the top of the sphere.
-            addVertex(createVertex(Vector3.Up * radius, Vector3.Up, Vector3.ForwardLH, new Vector2(0.5f, 0)));
+            AddVertex(createVertex, Vector3.Up*radius, Vector3.Up, Vector3.ForwardLH, new Vector2(0.5f, 0));
 
             // Create a fan connecting the bottom vertex to the bottom latitude ring.
             for (var i = 1; i <= sliceCount; i++)
-                addTriangle(0, i, i + 1, !swap);
+                AddTriangle(0, i, i + 1, !swap);
 
             // Fill the sphere body with triangles joining each pair of latitude rings.
             var baseIndex = 1;
@@ -77,12 +76,12 @@ namespace factor10.VisionThing.Primitives
             for (var i = 0; i < stackCount - 2; i++)
                 for (var j = 0; j < sliceCount; j++)
                 {
-                    addTriangle(
-                        baseIndex + i * ringVertexCount+j,
-                        baseIndex+i*ringVertexCount+j+1,
-                        baseIndex+(i+1)*ringVertexCount+j,
+                    AddTriangle(
+                        baseIndex + i*ringVertexCount + j,
+                        baseIndex + i*ringVertexCount + j + 1,
+                        baseIndex + (i + 1)*ringVertexCount + j,
                         swap);
-                    addTriangle(
+                    AddTriangle(
                         baseIndex + (i + 1)*ringVertexCount + j,
                         baseIndex + i*ringVertexCount + j + 1,
                         baseIndex + (i + 1)*ringVertexCount + j + 1,
@@ -92,9 +91,9 @@ namespace factor10.VisionThing.Primitives
             // Create a fan connecting the top vertex to the top latitude ring.
             baseIndex = CurrentVertex - 1 - ringVertexCount;
             for (var i = 0; i < sliceCount; i++)
-                addTriangle(CurrentVertex - 1, baseIndex + i, baseIndex + i + 1, swap);
+                AddTriangle(CurrentVertex - 1, baseIndex + i, baseIndex + i + 1, swap);
 
-            initializePrimitive(graphicsDevice);
+            InitializePrimitive(graphicsDevice);
         }
 
         // since the texture becomes distorted at the poles, I make the stacks at the poles much thinner

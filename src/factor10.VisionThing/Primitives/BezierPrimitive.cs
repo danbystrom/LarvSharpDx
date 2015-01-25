@@ -36,15 +36,11 @@ namespace factor10.VisionThing.Primitives
                     // If this patch is mirrored, reverse the
                     // indices to keep the correct winding order.
                     if (isMirrored)
-                    {
                         Array.Reverse(indices);
-                    }
 
                     // Create the indices.
-                    foreach (int index in indices)
-                    {
-                        addIndex(CurrentVertex + index);
-                    }
+                    foreach (var index in indices)
+                        AddIndex(CurrentVertex + index);
                 }
             }
         }
@@ -119,7 +115,7 @@ namespace factor10.VisionThing.Primitives
                     }
 
                     // Create the vertex.
-                    addVertex(new VertexPositionNormal(position, normal));
+                    AddVertex(new VertexPositionNormal(position, normal));
                 }
             }
         }

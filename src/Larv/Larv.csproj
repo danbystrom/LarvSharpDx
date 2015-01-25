@@ -108,7 +108,6 @@
     <Compile Include="GameStates\StartSerpentState.cs" />
     <Compile Include="Field\Ground.cs" />
     <Compile Include="LarvContent.cs" />
-    <Compile Include="Field\PlanePrimitive.cs" />
     <Compile Include="Serpent\Frog.cs" />
     <Compile Include="LarvGame.cs" />
     <Compile Include="Field\PathFinder.cs" />

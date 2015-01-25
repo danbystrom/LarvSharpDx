@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using System.Linq;
 using factor10.VisionThing.CameraStuff;
-using factor10.VisionThing.Objects;
 using SharpDX;
 using SharpDX.Toolkit.Graphics;
 
@@ -67,7 +66,6 @@ namespace factor10.VisionThing.Terrain
 
             var slicesW = groundMap.Width/Side;
             var slicesH = groundMap.Height/Side;
-            //TODO - this is wrong - I guess...
             var sliceFracX = 1f/slicesW;
             var sliceFracY = 1f/slicesH;
             _slices = new TerrainSlice[slicesW*slicesH];

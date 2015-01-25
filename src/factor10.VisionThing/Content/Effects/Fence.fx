@@ -16,21 +16,8 @@ texture2D ShadowMap;
 
 float Ambient = 0.2;
 
-//------- Texture Samplers --------
-
-Texture2D Texture0;
-Texture2D Texture1;
-Texture2D Texture2;
-Texture2D Texture3;
-Texture2D Texture4;
-Texture2D Texture5;
-Texture2D Texture6;
-Texture2D Texture7;
-Texture2D Texture8;
-
+Texture2D Texture;
 Texture2D HeightsMap;
-Texture2D NormalsMap;
-Texture2D WeightsMap;
 
 struct MTVertexToPixel
 {
@@ -60,7 +47,7 @@ MTVertexToPixel MultiTexturedVS(float4 inPos : SV_Position, float2 inTexCoords :
 	output.WorldPosition = worldPosition;
 
 	output.ShadowScreenPos = mul(worldPosition, ShadowViewProjection);
-	output.Normal = 2*(NormalsMap.SampleLevel(TextureSampler, output.TextureCoords, 0).xyz - float3(0.5, 0.5, 0.5));
+	//output.Normal = 2*(NormalsMap.SampleLevel(TextureSampler, output.TextureCoords, 0).xyz - float3(0.5, 0.5, 0.5));
 	return output;
 }
 
@@ -72,60 +59,11 @@ float2 sampleShadowMap(float2 UV)
 	return ShadowMap.Sample(TextureSampler, UV).rg;
 }
 
-float4 winterMultiTexturedPS(MTVertexToPixel input) : SV_Target
-{
-	float lightingFactor = saturate(Ambient + dot(input.Normal, SunlightDirection));
-
-	if (DoShadowMapping)
-	{
-		float realDepth = input.ShadowScreenPos.z / input.ShadowScreenPos.w - ShadowBias;
-		if (realDepth < 1)
-		{
-			float2 screenPos = input.ShadowScreenPos.xy / input.ShadowScreenPos.w;
-			float2 shadowTexCoord = 0.5f * (float2(screenPos.x, -screenPos.y) + 1);
-			float2 moments = sampleShadowMap(shadowTexCoord);
-			float lit_factor = (realDepth <= moments.x);
-			float E_x2 = moments.y;
-			float Ex_2 = moments.x * moments.x;
-			float variance = min(max(E_x2 - Ex_2, 0.0) + 1.0f / 10000.0f, 1.0);
-			float m_d = (moments.x - realDepth);
-			float p = variance / (variance + m_d * m_d);
-			lightingFactor *= clamp(max(lit_factor, p), ShadowMult, 1.0f);
-		}
-	}
-
-	float4 color = lightingFactor;
-	color.w = 1;
-	return color;
-}
-
 float4 MultiTexturedPS(MTVertexToPixel input) : SV_Target
 {
 	float lightingFactor = saturate(Ambient + dot(input.Normal, SunlightDirection));
 
-	float4 textureWeights = WeightsMap.Sample(TextureSampler, input.TextureCoords);
-	float weight1 = saturate(textureWeights.x - 0.5) * 2;
-	float weight2 = saturate(textureWeights.y - 0.5) * 2;
-	float weight3 = saturate(textureWeights.z - 0.5) * 2;
-	float weight4 = saturate(textureWeights.w - 0.5) * 2;
-	float weight5 = saturate(0.5 - textureWeights.x) * 2;
-	float weight6 = saturate(0.5 - textureWeights.y) * 2;
-	float weight7 = saturate(0.5 - textureWeights.z) * 2;
-	float weight8 = saturate(0.5 - textureWeights.w) * 2;
-	float weight0 = saturate(1 - weight1 - weight2 - weight3 - weight4 - weight5 - weight6 - weight7 - weight8);
-
-	float4 color = 0;
-	float2 textureCoords = input.TextureCoords * 9;
-	color += Texture0.Sample(TextureSampler, textureCoords)*weight0;
-	color += Texture1.Sample(TextureSampler, textureCoords)*weight1;
-	color += Texture2.Sample(TextureSampler, textureCoords)*weight2;
-	color += Texture3.Sample(TextureSampler, textureCoords)*weight3;
-	color += Texture4.Sample(TextureSampler, textureCoords)*weight4;
-	textureCoords *= 20;
-	color += Texture5.Sample(TextureSampler, textureCoords)*weight5;
-	color += Texture6.Sample(TextureSampler, textureCoords)*weight6;
-	color += Texture7.Sample(TextureSampler, textureCoords)*weight7;
-	color += Texture8.Sample(TextureSampler, textureCoords)*weight8;
+	float4 color = Texture.Sample(TextureSampler, input.TextureCoords);
 
 	if (DoShadowMapping)
 	{

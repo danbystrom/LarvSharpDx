@@ -31,6 +31,11 @@ namespace factor10.VisionThing.Primitives
             TextureCoordinate = textureCoordinate;
         }
 
+        public VertexPositionNormalTangentTexture(PositionNormalTangentTexture pntt, float texScale = 1)
+            : this(pntt.Position, pntt.Normal, pntt.Tangent, pntt.TextureCoordinate*texScale)
+        {
+        }
+
         public bool Equals(VertexPositionNormalTangentTexture other)
         {
             return Position.Equals(other.Position) && Normal.Equals(other.Normal) && Tangent.Equals(other.Tangent) && TextureCoordinate.Equals(other.TextureCoordinate);

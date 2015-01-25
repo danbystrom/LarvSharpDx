@@ -58,23 +58,23 @@ namespace factor10.VisionThing.Primitives
                     position = Vector3.TransformCoordinate(position, transform);
                     normal = Vector3.TransformNormal(normal, transform);
 
-                    addVertex(createVertex(position, normal));
+                    AddVertex(createVertex(position, normal));
 
                     // And create indices for two triangles.
                     var nextI = (i + 1) % tessellation;
                     var nextJ = (j + 1) % tessellation;
 
-                    addIndex(i * tessellation + j);
-                    addIndex(i * tessellation + nextJ);
-                    addIndex(nextI * tessellation + j);
+                    AddIndex(i * tessellation + j);
+                    AddIndex(i * tessellation + nextJ);
+                    AddIndex(nextI * tessellation + j);
 
-                    addIndex(i * tessellation + nextJ);
-                    addIndex(nextI * tessellation + nextJ);
-                    addIndex(nextI * tessellation + j);
+                    AddIndex(i * tessellation + nextJ);
+                    AddIndex(nextI * tessellation + nextJ);
+                    AddIndex(nextI * tessellation + j);
                 }
             }
 
-            initializePrimitive(graphicsDevice);
+            InitializePrimitive(graphicsDevice);
         }
     }
 }

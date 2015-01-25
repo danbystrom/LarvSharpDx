@@ -26,6 +26,11 @@ namespace factor10.VisionThing.Primitives
             Normal = normal;
         }
 
+        public VertexPositionNormal(PositionNormalTangentTexture pntt)
+            : this(pntt.Position, pntt.Normal)
+        {
+        }
+
         public bool Equals(VertexPositionNormal other)
         {
             return Position.Equals(other.Position) && Normal.Equals(other.Normal);

@@ -96,10 +96,10 @@ namespace factor10.VisionThing.Water
 
         private PlanePrimitive<WaterVertex> generatePlane(GraphicsDevice graphicsDevice, int squareSize, float dx, float dz, float texScale)
         {
+            var d = new Vector3(2*dx, 0, 2*dz);
             return new PlanePrimitive<WaterVertex>(
                 graphicsDevice,
-                (x, y, width, height) =>
-                    new WaterVertex(new Vector3(2*x*dx, 0, 2*y*dz), new Vector2(x/squareSize, y/squareSize), new Vector2(x/squareSize, y/squareSize)*texScale),
+                _ => new WaterVertex(_.Position*d, _.TextureCoordinate, _.TextureCoordinate*texScale),
                 squareSize,
                 squareSize,
                 6);

@@ -15,7 +15,7 @@ namespace factor10.VisionThing
             Texture2DBase texture)
             : base(new VisionEffect(vtContent.Load<Effect>("effects/skysphere")))
         {
-            _sphere = new SpherePrimitive<VertexPosition>(vtContent.GraphicsDevice, (p, n, t, tx) => new VertexPosition(p), 20000, 10, false);
+            _sphere = new SpherePrimitive<VertexPosition>(vtContent.GraphicsDevice, _ => new VertexPosition(_.Position), 20000, 10, false);
             Effect.Texture = texture;
         }
 

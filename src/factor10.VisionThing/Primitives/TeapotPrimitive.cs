@@ -56,7 +56,7 @@ namespace factor10.VisionThing.Primitives
                 }
             }
 
-            initializePrimitive(graphicsDevice);
+            InitializePrimitive(graphicsDevice);
         }
 
 
