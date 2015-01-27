@@ -1,23 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using factor10.VisionThing;
 using factor10.VisionThing.CameraStuff;
-using factor10.VisionThing.Primitives;
 using factor10.VisionThing.Util;
-using Larv.Field;
 using Larv.GameStates;
 using Larv.Serpent;
-using Larv.Util;
 using SharpDX;
 using SharpDX.Direct3D11;
 using SharpDX.Toolkit;
-using SharpDX.Toolkit.Graphics;
 using SharpDX.Toolkit.Input;
 using System.Drawing;
 using System.Reflection;
-using System.Text;
 using System.Windows.Forms;
 using Color = SharpDX.Color;
 using Keys = SharpDX.Toolkit.Input.Keys;
@@ -69,16 +63,12 @@ namespace Larv
             base.Initialize();
         }
 
-        private List<string> loadSceneDescriptions()
+        private IEnumerable<string> loadSceneDescriptions()
         {
             using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("Larv.PlayingFields.txt"))
             using (var fs = new StreamReader(stream))
-            {
-                var list = new List<string>();
                 while (!fs.EndOfStream)
-                    list.Add(fs.ReadLine());
-                return list;
-            }
+                    yield return fs.ReadLine();
         }
 
         protected override void LoadContent()
@@ -101,7 +91,6 @@ namespace Larv
                 _serpents = new Serpents(_lcontent, camera, 0);
                 _lcontent.ShadowMap.ShadowCastingObjects.Add(_serpents);
                 _gameState = new AttractState(_serpents);
-
             }
             catch (Exception ex)
             {
@@ -148,9 +137,11 @@ namespace Larv
             _gameState.Draw(_serpents.Camera, DrawingReason.Normal, _lcontent.ShadowMap);
 
             //GraphicsDevice.SetRasterizerState(GraphicsDevice.RasterizerStates.WireFrame);
- 
+
+#if DEBUG
             using (_lcontent.UsingSpriteBatch())
-                _lcontent.DrawString("FPS: {0}  {1}".Fmt(_fps.FrameRate, _gameState), Vector2.Zero, 0.3f, 0, Color.White);
+                _lcontent.DrawString("FPS: {0}  {1}".Fmt(_fps.FrameRate, _gameState), Vector2.Zero, 0.35f, 0, Color.White);
+#endif
 
             base.Draw(gameTime);
         }

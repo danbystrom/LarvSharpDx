@@ -105,7 +105,7 @@ namespace Larv.Field
                 if (position.Y < 0.7f)
                     continue;
                 position.Y -= 0.05f;
-                var normal = normals.GetExact(gx, gy).ToVector3();
+                var normal = GroundMap.GetNormal(gx, gy, ref World);
                 if (normal.Y < 0.5f)
                     continue; // too much slope
                 normal.Y *= 2; // straighten it up a bit

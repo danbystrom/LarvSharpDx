@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using factor10.VisionThing;
 using factor10.VisionThing.CameraStuff;
@@ -76,6 +77,9 @@ namespace Larv.GameStates
                 _serpents.ResetScoreAndLives();
                 gameState = new GotoBoardState(_serpents, 0);
             }
+
+            if (_serpents.Camera.KeyboardState.IsKeyPressed(Keys.F1))
+                Process.Start("https://github.com/danbystrom/Larv/wiki");
         }
 
         public void Draw(Camera camera, DrawingReason drawingReason, ShadowMap shadowMap)

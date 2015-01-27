@@ -79,32 +79,32 @@ namespace factor10.VisionThing.Terrain
 
         public float GetExactHeight(int x, int y, float fracx, float fracy)
         {
-            var topHeight = MathUtil.Lerp(
-                this[x, y],
-                this[x + 1, y],
-                fracx);
+            //var topHeight = MathUtil.Lerp(
+            //    this[x, y],
+            //    this[x + 1, y],
+            //    fracx);
 
-            var bottomHeight = MathUtil.Lerp(
-                this[x, y + 1],
-                this[x + 1, y + 1],
-                fracx);
+            //var bottomHeight = MathUtil.Lerp(
+            //    this[x, y + 1],
+            //    this[x + 1, y + 1],
+            //    fracx);
 
-            return MathUtil.Lerp(topHeight, bottomHeight, fracy);
+            //return MathUtil.Lerp(topHeight, bottomHeight, fracy);
 
-            //if (fracx + fracy < 1)
-            //{
-            //    var xy = this[x, y];
-            //    var dy = this[x, y + 1] - xy;
-            //    var dx = this[x + 1, y] - xy;
-            //    return xy + fracx*dx + fracy*dy;
-            //}
-            //else
-            //{
-            //    var xy = this[x + 1, y + 1];
-            //    var dy = this[x, y + 1] - xy;
-            //    var dx = this[x + 1, y] - xy;
-            //    return xy + (1 - fracx)*dx + (1 - fracy)*dy;
-            //}
+            if (fracx + fracy < 1)
+            {
+                var xy = this[x, y];
+                var dy = this[x, y + 1] - xy;
+                var dx = this[x + 1, y] - xy;
+                return xy + fracx * dx + fracy * dy;
+            }
+            else
+            {
+                var xy = this[x + 1, y + 1];
+                var dy = this[x + 1, y] - xy;
+                var dx = this[x, y + 1] - xy;
+                return xy + (1 - fracx) * dx + (1 - fracy) * dy;
+            }
         }
 
         public float GetExactHeight(float x, float y)
@@ -191,15 +191,19 @@ namespace factor10.VisionThing.Terrain
             return n;
         }
 
-        public Vector3 GetNormal(int x, int y, ref Matrix world)
+        public Vector3 GetNormal(float x, float y, ref Matrix world)
         {
-            if (x < 0 || y < 0 || x >= (Width - 1) || y >= (Height + 1))
+            if (x < 1 || y < 1 || x >= (Width - 2) || y >= (Height + 2))
                 return Vector3.Up;
 
-            var index = y*Width + x;
-            var l0 = new Vector3(x, Values[index], y);
-            var l1 = new Vector3(x + 1, Values[index + 1], y);
-            var l2 = new Vector3(x, Values[index + Width], y + 1);
+            //var index = y*Width + x;
+            //var l0 = new Vector3(x, Values[index], y);
+            //var l1 = new Vector3(x + 1, Values[index + 1], y);
+            //var l2 = new Vector3(x, Values[index + Width], y + 1);
+            var l0 = new Vector3(x, GetExactHeight(x, y), y);
+            var l1 = new Vector3(x + 0.01f, GetExactHeight(x + 0.01f, y), y);
+            var l2 = new Vector3(x, GetExactHeight(x, y + 0.01f), y + 0.01f);
+
             Vector3 w0, w1, w2;
             Vector3.TransformCoordinate(ref l0, ref world, out w0);
             Vector3.TransformCoordinate(ref l1, ref world, out w1);

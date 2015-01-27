@@ -5,9 +5,10 @@ namespace Larv.Field
     public enum PlayingFieldSquareType
     {
         None,
+        UnconnectedSlope,
         Flat,
         Slope,
-        Portal
+        Portal,
     }
 
     public struct PlayingFieldSquare
@@ -66,6 +67,11 @@ namespace Larv.Field
         public bool IsNone
         {
             get { return PlayingFieldSquareType == PlayingFieldSquareType.None; }
+        }
+
+        public bool IsUnconnectedSlope
+        {
+            get { return PlayingFieldSquareType == PlayingFieldSquareType.UnconnectedSlope; }
         }
 
         public bool IsPortal

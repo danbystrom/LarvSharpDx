@@ -140,14 +140,14 @@ namespace Larv.Serpent
 
                     Vector3 gspaceTo;
                     Vector3.TransformCoordinate(ref toPosition, ref winv, out gspaceTo);
-                    normal = _ground.GroundMap.GetNormal((int) gspaceTo.X, (int) gspaceTo.Z, ref _ground.World);
+                    normal = _ground.GroundMap.GetNormal(gspaceTo.X, gspaceTo.Z, ref _ground.World);
                     if (normal.Y < 0.5f)
                         continue;
 
-                    var pos0 = _ground.GroundMap.GetExactHeight(gspaceTo.X - 0.1f, gspaceTo.Z - 0.1f);
-                    var pos1 = _ground.GroundMap.GetExactHeight(gspaceTo.X - 0.1f, gspaceTo.Z + 0.1f);
-                    var pos2 = _ground.GroundMap.GetExactHeight(gspaceTo.X + 0.1f, gspaceTo.Z - 0.1f);
-                    var pos3 = _ground.GroundMap.GetExactHeight(gspaceTo.X + 0.1f, gspaceTo.Z + 0.1f);
+                    var pos0 = _ground.GroundMap.GetExactHeight(gspaceTo.X - 0.05f, gspaceTo.Z - 0.05f);
+                    var pos1 = _ground.GroundMap.GetExactHeight(gspaceTo.X - 0.05f, gspaceTo.Z + 0.05f);
+                    var pos2 = _ground.GroundMap.GetExactHeight(gspaceTo.X + 0.05f, gspaceTo.Z - 0.05f);
+                    var pos3 = _ground.GroundMap.GetExactHeight(gspaceTo.X + 0.05f, gspaceTo.Z + 0.05f);
                     gspaceTo.Y = Math.Min(Math.Min(pos0, pos1), Math.Min(pos2, pos3));
                         // _ground.GroundMap.GetExactHeight(gspaceTo.X, gspaceTo.Z);
 

@@ -90,7 +90,7 @@ namespace Larv.Field
             if (!CanMoveHere(floor, p, p.Add(0, 1)))
                 addSide(vertsShadow, verts[i + 2].Position, verts[i + 5].Position, Vector3.BackwardRH);
             if (!CanMoveHere(floor, p, p.Add(1, 0)))
-                addSide(vertsShadow, verts[i + 1].Position, verts[i + 5].Position, Vector3.Left);
+                addSide(vertsShadow, verts[i + 5].Position, verts[i + 1].Position, Vector3.Left);
             if (!CanMoveHere(floor, p, p.Add(-1, 0)))
                 addSide(vertsShadow, verts[i].Position, verts[i + 2].Position, Vector3.Right);
         }
