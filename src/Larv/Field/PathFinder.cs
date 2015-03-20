@@ -18,7 +18,7 @@ namespace Larv.Field
         public void Explore(int floor, Point fromLoc, int distance, Direction direction)
         {
             var toLoc = fromLoc.Add(direction.DirectionAsPoint());
-            if (!PlayingField.CanMoveHere(ref floor, fromLoc, toLoc, true))
+            if (!PlayingField.CanMoveHere(floor, fromLoc, toLoc, true))
                 return;
 
             var here = Distance[floor, toLoc.Y, toLoc.X];
@@ -34,7 +34,7 @@ namespace Larv.Field
         private int getDistance(int floor, Point fromLoc, Direction direction)
         {
             var toLoc = fromLoc.Add(direction.DirectionAsPoint());
-            return PlayingField.CanMoveHere(ref floor, fromLoc, toLoc, true)
+            return PlayingField.CanMoveHere(floor, fromLoc, toLoc, true)
                 ? Distance[floor, toLoc.Y, toLoc.X]
                 : int.MaxValue;
         }

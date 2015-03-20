@@ -58,7 +58,7 @@ namespace Larv.Serpent
                     return;
                 var dir = HeadDirection.Turn(rdir);
                 var possibleLocationTo = _whereabouts.Location.Add(dir);
-                if (!PlayingField.CanMoveHere(ref _whereabouts.Floor, _whereabouts.Location, possibleLocationTo))
+                if (!PlayingField.CanMoveHere(_whereabouts.Floor, _whereabouts.Location, possibleLocationTo))
                     return;
                 _tail.RevokePathToWalk(_whereabouts.Location);
                 _whereabouts.Direction = dir;

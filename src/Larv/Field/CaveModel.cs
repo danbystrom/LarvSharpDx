@@ -37,7 +37,7 @@ namespace Larv.Field
 
         public void SetPosition(Whereabouts whereabouts, PlayingField playingField)
         {
-            SetPosition(whereabouts.GetPosition(playingField), whereabouts.Direction);
+            SetPosition(whereabouts.GetPosition(), whereabouts.Direction);
         }
 
         public void SetPosition(Vector3 position, Direction direction)

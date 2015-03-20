@@ -32,7 +32,8 @@ namespace factor10.VisionThing
         {
             GraphicsDevice = graphicsDevice;
             Content = content;
-            TerrainPlane = new TerrainPlane(this);
+            if (GraphicsDevice != null)
+                TerrainPlane = new TerrainPlane(this);
         }
 
         public static Vector3 SunlightDirectionReflectedWater

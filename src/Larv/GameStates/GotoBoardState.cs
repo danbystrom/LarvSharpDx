@@ -53,7 +53,7 @@ namespace Larv.GameStates
 
             // turn around the camera to look at the cave 
             _actions.AddDurable(
-                () => new MoveCameraYaw(_serpents.Camera, turnToCaveTime.Time(), toPosition, StartSerpentState.GetPlayerInitialLookAt(_serpents.PlayingField)));
+                () => new MoveCameraYaw(_serpents.Camera, turnToCaveTime.Time(), toPosition, _serpents.PlayingField.PlayerWhereaboutsStart.GetPosition()));
         }
 
         public void Update(Camera camera, GameTime gameTime, ref IGameState gameState)

@@ -58,10 +58,12 @@ namespace Larv.Field
                             break;
 
                         case 'A':
+                            _field[floor, y, x] = PlayingFieldSquare.CreateFlat(0);
                             playerWhereaboutsStart = calcWhereabouts(field, 'a', floor, x, y);
                             goto case 'X';
 
                         case 'B':
+                            _field[floor, y, x] = PlayingFieldSquare.CreateFlat(0);
                             enemyWhereaboutsStart = calcWhereabouts(field, 'b', floor, x, y);
                             goto case 'X';
 
@@ -123,7 +125,7 @@ namespace Larv.Field
                 direction = Direction.South;
             else if (y < (field.Length - 1) && field[y + 1][x] == token)
                 direction = Direction.North;
-            return new Whereabouts(floor, new Point(x, y), direction);
+            return new Whereabouts(null, floor, new Point(x, y), direction);
         }
 
         private PlayingFieldSquare createSlopeSquare(int x, int y)

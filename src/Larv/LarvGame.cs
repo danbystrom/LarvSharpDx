@@ -4,6 +4,7 @@ using System.IO;
 using factor10.VisionThing;
 using factor10.VisionThing.CameraStuff;
 using factor10.VisionThing.Util;
+using Larv.Field;
 using Larv.GameStates;
 using Larv.Serpent;
 using SharpDX;
@@ -63,19 +64,11 @@ namespace Larv
             base.Initialize();
         }
 
-        private IEnumerable<string> loadSceneDescriptions()
-        {
-            using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("Larv.PlayingFields.txt"))
-            using (var fs = new StreamReader(stream))
-                while (!fs.EndOfStream)
-                    yield return fs.ReadLine();
-        }
-
         protected override void LoadContent()
         {
             try
             {
-                _lcontent = new LarvContent(GraphicsDevice, Content, loadSceneDescriptions());
+                _lcontent = new LarvContent(GraphicsDevice, Content, LoadPlayingField.Load());
 
                 var shadowCameraPos = new Vector3(12, 4, 12) - VisionContent.SunlightDirection*32;
                 var shadowCameraLookAt = shadowCameraPos + VisionContent.SunlightDirection;

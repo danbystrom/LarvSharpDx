@@ -30,6 +30,9 @@ namespace Larv
         public LarvContent(GraphicsDevice graphicsDevice, ContentManager content, IEnumerable<string> sceneDescription)
             : base(graphicsDevice, content)
         {
+            PlayingFieldInfos = PlayingFieldsDecoder.Create(sceneDescription);
+            if (graphicsDevice == null)
+                return;
             SpriteBatch = new SpriteBatch(graphicsDevice);
             Font = Load<SpriteFont>("fonts/BlackCastle");
             SignTextEffect = LoadEffect("effects/signtexteffect");
@@ -42,7 +45,6 @@ namespace Larv
             ShadowMap = new ShadowMap(this, 800, 800, 1, 50);
             ShadowMap.UpdateProjection(50, 30);
             HallOfFame = HofStorage.Load();
-            PlayingFieldInfos = PlayingFieldsDecoder.Create(sceneDescription);
         }
 
         public float FontScaleRatio

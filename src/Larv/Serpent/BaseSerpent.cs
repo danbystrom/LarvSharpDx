@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Forms;
 using factor10.VisionThing;
 using factor10.VisionThing.CameraStuff;
 using factor10.VisionThing.Effects;
@@ -135,7 +136,7 @@ namespace Larv.Serpent
                 if (_fractionAngle >= 1)
                 {
                     _fractionAngle = 0;
-                    _whereabouts.Location = _whereabouts.NextLocation;
+                    _whereabouts.GoToNextLocation();
                     takeDirection(false);
                 } else if (_fractionAngle < 0.6f)
                     takeDirection(true);
@@ -162,7 +163,7 @@ namespace Larv.Serpent
                 return true;
             }
             var possibleLocationTo = _whereabouts.Location.Add(dir);
-            if (!PlayingField.CanMoveHere(ref _whereabouts.Floor, _whereabouts.Location, possibleLocationTo, ignoreRestriction))
+            if (!PlayingField.CanMoveHere(_whereabouts.Floor, _whereabouts.Location, possibleLocationTo, ignoreRestriction))
                 return false;
             _whereabouts.Direction = dir;
             _tail.AddPathToWalk(_whereabouts);
@@ -268,7 +269,7 @@ namespace Larv.Serpent
 
         public Vector3 Position
         {
-            get { return _whereabouts.GetPosition(PlayingField); }
+            get { return _whereabouts.GetPosition(); }
         }
 
         public Whereabouts Whereabouts

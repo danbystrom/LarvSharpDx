@@ -1,7 +1,6 @@
 ﻿using factor10.VisionThing;
 using factor10.VisionThing.CameraStuff;
 using factor10.VisionThing.Util;
-using Larv.Field;
 using Larv.Serpent;
 using Larv.Util;
 using SharpDX;
@@ -27,7 +26,7 @@ namespace Larv.GameStates
                 serpents.Camera,
                 5f.UnitsPerSecond(),
                 toPosition,
-                GetPlayerInitialLookAt(_serpents.PlayingField)));
+                GetPlayerInitialLookAt()));
             _actions.AddOneShot(() => _serpents.PlayerSerpent.Restart(_serpents.PlayingField, 1));
             _actions.AddWhile(time => _serpents.PlayingField.FieldValue(_serpents.PlayerSerpent.Whereabouts).Restricted != Direction.None);
             _actions.AddOneShot(() =>
@@ -52,10 +51,9 @@ namespace Larv.GameStates
             _serpents.Draw(camera, drawingReason, shadowMap);
         }
 
-        public static Vector3 GetPlayerInitialLookAt(PlayingField pf)
+        public Vector3 GetPlayerInitialLookAt()
         {
-            return pf.PlayerWhereaboutsStart.GetPosition(pf);
-            ;
+            return _serpents.PlayingField.PlayerWhereaboutsStart.GetPosition();
         }
 
     }

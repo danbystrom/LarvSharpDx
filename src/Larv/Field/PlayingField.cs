@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using factor10.VisionThing;
 using factor10.VisionThing.CameraStuff;
@@ -39,9 +40,14 @@ namespace Larv.Field
             Width = pfInfo.WIdth;
             PlayerWhereaboutsStart = pfInfo.PlayerSerpentStart;
             EnemyWhereaboutsStart = pfInfo.EnemySerpentStart;
+            PlayerWhereaboutsStart.PlayingField = this;
+            EnemyWhereaboutsStart.PlayingField = this;
 
             MiddleX = Width/2f;
             MiddleY = Height/2f;
+
+            if (lContent.GraphicsDevice == null)
+                return;  // for tests
 
             var verts = new List<VertexPositionNormalTexture>
             {
@@ -171,13 +177,12 @@ namespace Larv.Field
             return TheField[floor, p.Y, p.X];
         }
 
-        public bool CanMoveHere(int floor, Point currentLocation, Point newLocation)
+        public bool CanMoveHere(int floor, Point currentLocation, Point newLocation, bool ignoreRestriction = false)
         {
-            return CanMoveHere(ref floor, currentLocation, newLocation);
-        }
+            if (currentLocation.X == 12 && currentLocation.Y == 12 && newLocation.X == 13 && newLocation.Y == 12)
+            {
+            }
 
-        public bool CanMoveHere(ref int floor, Point currentLocation, Point newLocation, bool ignoreRestriction = false)
-        {
             if (!FieldValue(floor, newLocation).IsNone)
             {
                 if (ignoreRestriction)
@@ -186,15 +191,9 @@ namespace Larv.Field
                 return restricted == Direction.None || restricted == Direction.FromPoints(currentLocation, newLocation);
             }
             if (FieldValue(floor, currentLocation).IsSlope && FieldValue(floor + 1, newLocation).IsPortal)
-            {
-                floor++;
                 return true;
-            }
-            if (FieldValue(floor, currentLocation).IsPortal && !FieldValue(floor - 1, newLocation).IsNone)
-            {
-                floor--;
+            if (FieldValue(floor, currentLocation).IsPortal && FieldValue(floor - 1, newLocation).IsSlope)
                 return true;
-            }
             return false;
         }
 
@@ -214,18 +213,24 @@ namespace Larv.Field
             return sq;
         }
 
-        private float getElevation(
-            Whereabouts whereabouts)
+        private float getElevation(Whereabouts whereabouts)
         {
+            if (FieldValue(whereabouts).IsNone)
+                return whereabouts.Floor*4f/3;
+
             var p1 = whereabouts.Location;
             var p2 = whereabouts.NextLocation;
             var floor1 = whereabouts.Floor;
             var floor2 = floor1;
             var square1 = fieldValue(ref floor1, p1);
             var square2 = fieldValue(ref floor2, p2);
-            return square1.IsNone
-                ? 0
-                : MathUtil.Lerp(floor1*4 + square1.Elevation, floor2*4 + square2.Elevation, whereabouts.Fraction)/3;
+            if (square1.IsNone)
+                return whereabouts.Floor*4f/3;
+            var e1 = floor1*4 + square1.Elevation;
+            var e2 = floor2*4 + square2.Elevation;
+            return Math.Abs(e1 - e2) > 1
+                ? e1 / 3f
+                : MathUtil.Lerp(e1, e2, whereabouts.Fraction)/3;
         }
 
         public float GetElevation(
@@ -233,9 +238,11 @@ namespace Larv.Field
         {
             whereabouts.Fraction -= 0.5f;
             whereabouts.Realign();
-            var x = getElevation(whereabouts);
-            whereabouts.Location = whereabouts.NextLocation;
-            return Math.Max(x, getElevation(whereabouts));
+
+            var y = getElevation(whereabouts);
+            if (!whereabouts.GoToNextLocationSafe())
+                return y;
+            return Math.Max(y, getElevation(whereabouts));
         }
 
         public void GetSurroundingElevation(int x, int y, out float min, out float max)
@@ -257,7 +264,7 @@ namespace Larv.Field
         public void GetCameraPositionForLookingAtPlayerCave(out Vector3 toPosition, out Vector3 toLookAt)
         {
             var lookAtDirection = PlayerWhereaboutsStart.Direction.DirectionAsVector3();
-            toLookAt = PlayerWhereaboutsStart.GetPosition(this) + lookAtDirection * 4;
+            toLookAt = PlayerWhereaboutsStart.GetPosition() + lookAtDirection * 4;
 
             var finalNormal = Vector3.TransformNormal(
                 lookAtDirection * SerpentCamera.CameraDistanceToHeadXz * 1.2f,

@@ -34,7 +34,7 @@ namespace Larv.Serpent
             {
                 //bugfix...
                 var p = new Point((previous.Location.X + last.Location.X)/2, (previous.Location.Y + last.Location.Y)/2);
-                PathToWalk[PathToWalk.Count - 1] = new Whereabouts(last.Floor, p, last.Direction) {Fraction = previous.Fraction};
+                PathToWalk[PathToWalk.Count - 1] = new Whereabouts(_pf, last.Floor, p, last.Direction) {Fraction = previous.Fraction};
             }
 
             if (PathToWalk.Count >= 2)
@@ -58,7 +58,7 @@ namespace Larv.Serpent
 
         public Vector3 Position
         {
-            get { return PathToWalk[0].GetPosition(_pf); }
+            get { return PathToWalk[0].GetPosition(); }
         }
 
         public void AddPathToWalk(Whereabouts w)

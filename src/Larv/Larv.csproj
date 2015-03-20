@@ -89,6 +89,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Field\LoadPlayingField.cs" />
     <Compile Include="Field\PlayingFieldsDecoder.cs" />
     <Compile Include="GameStates\AttractBigTexts.cs" />
     <Compile Include="GameStates\HallOfFameState.cs" />
